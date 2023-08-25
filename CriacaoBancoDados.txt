@@ -1,0 +1,24 @@
+﻿
+criacao do caminho para do banco de dados mysql que esta no appsettings.json
+ var builder = WebApplication.CreateBuilder(args);
+
+            IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(builder.Environment.ContentRootPath)
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            string connectionString = configuration.GetConnectionString("SalesWebMVC2022Context");
+
+
+            builder.Services.AddDbContext<SalesWebMVC2022Context>(options =>
+                options.UseMySql(
+                    connectionString,
+                    ServerVersion.Parse("8.0.30-mysql")
+                    ));
+
+
+migration do banco de dados mysql
+Add-Migration Criacao-Inicial -Context SalesWebMVC2022Context
+
+adicionar essa migracao ao banco de dados
+Update-Database -Context SalesWebMVC2022Context
