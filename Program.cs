@@ -60,7 +60,7 @@ namespace SalesWebMVC2022
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Departments}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }
