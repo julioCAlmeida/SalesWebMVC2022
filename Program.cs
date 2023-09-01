@@ -26,6 +26,9 @@ namespace SalesWebMVC2022
                     ServerVersion.Parse("8.0.30-mysql")
                     ));
 
+            //Add services to the seeding.
+            builder.Services.AddScoped<SeedingService>();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -37,6 +40,15 @@ namespace SalesWebMVC2022
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+            }
+
+            //injected and used to perform data seeding
+            using (IServiceScope scope = app.Services.CreateScope())
+            {
+                IServiceProvider services = scope.ServiceProvider;
+                SeedingService seedingServices = services.GetRequiredService<SeedingService>();
+
+                seedingServices.Seed();
             }
 
             app.UseHttpsRedirection();
