@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMVC2022.Data;
+using SalesWebMVC2022.Services;
 using System.Configuration;
 
 namespace SalesWebMVC2022
@@ -29,8 +30,12 @@ namespace SalesWebMVC2022
             //Add services to the seeding.
             builder.Services.AddScoped<SeedingService>();
 
+            //Add services to the sellerService.
+            builder.Services.AddScoped<SellerService>();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
 
             var app = builder.Build();
 
@@ -43,13 +48,8 @@ namespace SalesWebMVC2022
             }
 
             //injected and used to perform data seeding
-            using (IServiceScope scope = app.Services.CreateScope())
-            {
-                IServiceProvider services = scope.ServiceProvider;
-                SeedingService seedingServices = services.GetRequiredService<SeedingService>();
-
-                seedingServices.Seed();
-            }
+            var seedingServices = app.Services.CreateScope().ServiceProvider.GetRequiredService<SeedingService>();
+            seedingServices.Seed();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
