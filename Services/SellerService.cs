@@ -1,4 +1,5 @@
-﻿using SalesWebMVC2022.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SalesWebMVC2022.Data;
 using SalesWebMVC2022.Models;
 
 namespace SalesWebMVC2022.Services
@@ -24,7 +25,7 @@ namespace SalesWebMVC2022.Services
         }
         public Seller FindById(int id)
         {
-            return _context.Seller.FirstOrDefault(objSeller => objSeller.Id == id);
+            return _context.Seller.Include(objDep => objDep.Department).FirstOrDefault(objSeller => objSeller.Id == id);
         }
         public void RemoveById(int id)
         {
