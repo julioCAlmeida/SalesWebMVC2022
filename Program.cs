@@ -30,8 +30,9 @@ namespace SalesWebMVC2022
             //Add services to the seeding.
             builder.Services.AddScoped<SeedingService>();
 
-            //Add services to the sellerService.
+            //Add services to the sellerService, departmentService.
             builder.Services.AddScoped<SellerService>();
+            builder.Services.AddScoped<DepartmentService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
